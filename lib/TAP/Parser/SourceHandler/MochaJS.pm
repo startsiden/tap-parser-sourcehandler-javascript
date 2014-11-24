@@ -20,7 +20,8 @@ sub can_handle {
     return 0 unless $meta->{is_file};
 
     # XXX: This should be configurable?
-    return 0 unless ($meta->{file}->{basename} =~ m/\.test\.js$/);
+    my $ext = $config->{ext} || '.test.js';
+    return 0 unless ($meta->{file}->{basename} =~ m/\Q$ext\E$/);
 
     if (my $folder = $config->{folder}) {
         $folder = [$folder] unless ref $folder;
@@ -30,7 +31,10 @@ sub can_handle {
 
         return 0.8 if grep { $dir =~ $_ } @$folder;
 
+    } elsif ($meta->{file}->{basename} =~ m/\Q$ext\E$/) {
+        return 0.4;
     }
+
 
     return 0;
 }
