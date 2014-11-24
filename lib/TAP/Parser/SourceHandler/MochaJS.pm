@@ -1,4 +1,5 @@
 package TAP::Parser::SourceHandler::MochaJS;
+#ABSTRACT: Lets you run tests with mocha trough prove
 
 use warnings;
 use strict;
