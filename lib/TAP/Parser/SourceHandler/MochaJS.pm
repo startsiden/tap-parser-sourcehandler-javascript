@@ -21,11 +21,13 @@ sub make_iterator {
 
     my $config = $source->config_for( $class->_name );
     my $timeout = $config->{timeout} // 50_000;
+    # Extra args for the mocha tester, for instance to compile coffeescript
+    my $extra = $config->{extra} || '';
     my @command = ( $config->{mocha} || 'mocha' );
     push @command, qw(
         --reporter tap
         -t 
-    ), $timeout;
+    ), $timeout, split(/\s+/, $extra);
 
     my $fn = ref $source->raw ? ${ $source->raw } : $source->raw;
 
